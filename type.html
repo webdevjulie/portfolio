@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typing Speed Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #f2f2f2;
+      margin: 0;
+    }
+    h1 {
+      color: #333;
+    }
+    #quote {
+      font-size: 1.5rem;
+      max-width: 600px;
+      margin: 20px;
+      text-align: center;
+      color: #555;
+    }
+    #inputArea {
+      padding: 10px;
+      width: 90%;
+      max-width: 600px;
+      font-size: 1rem;
+      border: 2px solid #aaa;
+      border-radius: 5px;
+      margin: 10px;
+    }
+    #stats {
+      margin-top: 20px;
+      text-align: center;
+      color: #222;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Typing Speed Test</h1>
+  <div id="quote">Loading quote...</div>
+  <textarea id="inputArea" rows="4" placeholder="Start typing here..." disabled></textarea>
+  <div id="stats">
+    <p>Time: <span id="time">0</span>s</p>
+    <p>WPM: <span id="wpm">0</span></p>
+    <p>Accuracy: <span id="accuracy">0</span>%</p>
+  </div>
+  <button onclick="startTest()">Start Test</button>
+
+  <script>
+    const quotes = [
+      "The quick brown fox jumps over the lazy dog.",
+      "Typing fast is a useful skill in the digital world.",
+      "Practice makes perfect when it comes to typing."
+    ];
+
+    let timer;
+    let time = 0;
+    let started = false;
+    let quote = "";
+
+    const quoteDisplay = document.getElementById('quote');
+    const inputArea = document.getElementById('inputArea');
+    const timeDisplay = document.getElementById('time');
+    const wpmDisplay = document.getElementById('wpm');
+    const accuracyDisplay = document.getElementById('accuracy');
+
+    function startTest() {
+      quote = quotes[Math.floor(Math.random() * quotes.length)];
+      quoteDisplay.textContent = quote;
+      inputArea.disabled = false;
+      inputArea.value = "";
+      inputArea.focus();
+      time = 0;
+      started = false;
+      clearInterval(timer);
+      timeDisplay.textContent = '0';
+      wpmDisplay.textContent = '0';
+      accuracyDisplay.textContent = '0';
+    }
+
+    function startTimer() {
+      timer = setInterval(() => {
+        time++;
+        timeDisplay.textContent = time;
+        updateStats();
+      }, 1000);
+    }
+
+    function updateStats() {
+      const typed = inputArea.value;
+      const words = typed.trim().split(/\s+/).length;
+      const correctChars = [...typed].filter((char, i) => char === quote[i]).length;
+      const accuracy = Math.round((correctChars / quote.length) * 100);
+
+      wpmDisplay.textContent = Math.round((words / time) * 60) || 0;
+      accuracyDisplay.textContent = isNaN(accuracy) ? 0 : accuracy;
+    }
+
+    inputArea.addEventListener('input', () => {
+      if (!started) {
+        started = true;
+        startTimer();
+      }
+      if (inputArea.value.length >= quote.length) {
+        clearInterval(timer);
+        updateStats();
+        inputArea.disabled = true;
+      }
+    });
+  </script>
+</body>
+</html>

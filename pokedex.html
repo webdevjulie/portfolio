@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive Pokédex</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .header {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-container {
+      position: relative;
+    }
+
+    input {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 25px;
+      width: 300px;
+      font-size: 16px;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(10px);
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    .music-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .music-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .music-btn:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+    }
+
+    .volume-slider {
+      appearance: none;
+      width: 100px;
+      height: 6px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 3px;
+      outline: none;
+    }
+
+    .generation-select {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(10px);
+      outline: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      min-width: 200px;
+    }
+
+    .generation-select:focus {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    .filter-container {
+      position: relative;
+    }
+
+    #pokemon-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .pokemon {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pokemon::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .pokemon:hover::before {
+      left: 100%;
+    }
+
+    .pokemon:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    }
+
+    .pokemon img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .pokemon:hover img {
+      transform: scale(1.1);
+    }
+
+    .pokemon h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      text-transform: capitalize;
+    }
+
+    .pokemon p {
+      margin-bottom: 5px;
+      opacity: 0.9;
+    }
+
+    .type-badge {
+      display: inline-block;
+      padding: 5px 10px;
+      margin: 2px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .type-fire { background: #ff6b6b; }
+    .type-water { background: #4ecdc4; }
+    .type-grass { background: #51cf66; }
+    .type-electric { background: #ffd93d; color: #333; }
+    .type-psychic { background: #ff8cc8; }
+    .type-rock { background: #8d6e63; }
+    .type-ground { background: #d4af37; }
+    .type-flying { background: #81c784; }
+    .type-normal { background: #9e9e9e; }
+    .type-fighting { background: #ff5722; }
+    .type-poison { background: #ab47bc; }
+    .type-bug { background: #689f38; }
+    .type-ghost { background: #7e57c2; }
+    .type-steel { background: #607d8b; }
+    .type-ice { background: #4fc3f7; }
+    .type-dragon { background: #3f51b5; }
+    .type-dark { background: #424242; }
+    .type-fairy { background: #f8bbd9; color: #333; }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      color: white;
+    }
+
+    .modal img {
+      width: 150px;
+      height: 150px;
+      margin-bottom: 20px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.1);
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 2rem;
+      cursor: pointer;
+      color: white;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 50px;
+      font-size: 1.2rem;
+    }
+
+    .spinner {
+      border: 4px solid rgba(255,255,255,0.3);
+      border-top: 4px solid white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .caught-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #4caf50;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .controls {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      input {
+        width: 90%;
+      }
+      
+      #pokemon-container {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🎮Pokédex</h1>
+    <p style="opacity: 0.8; margin-bottom: 10px;">Complete Generation 1-9 Collection (1000+ Pokémon)</p>
+    <div class="controls">
+      <div class="search-container">
+        <input type="text" id="search" placeholder="Search Pokémon or type..." />
+      </div>
+      <div class="filter-container">
+        <select id="generationFilter" class="generation-select">
+          <option value="all">All Generations</option>
+          <option value="1">Gen 1 - Kanto</option>
+          <option value="2">Gen 2 - Johto</option>
+          <option value="3">Gen 3 - Hoenn</option>
+          <option value="4">Gen 4 - Sinnoh</option>
+          <option value="5">Gen 5 - Unova</option>
+          <option value="6">Gen 6 - Kalos</option>
+          <option value="7">Gen 7 - Alola</option>
+          <option value="8">Gen 8 - Galar</option>
+          <option value="9">Gen 9 - Paldea</option>
+        </select>
+      </div>
+      <div class="music-controls">
+        <button class="music-btn" id="musicToggle">🎵 Play Music</button>
+        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="0.5">
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p>Loading Pokémon from all generations...</p>
+    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">This may take a moment as we load 1000+ Pokémon!</p>
+  </div>
+
+  <div id="pokemon-container"></div>
+
+  <div class="modal" id="pokemonModal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <audio id="backgroundMusic" loop>
+    <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
+  </audio>
+
+  <script>
+    const container = document.getElementById('pokemon-container');
+    const searchInput = document.getElementById('search');
+    const generationFilter = document.getElementById('generationFilter');
+    const modal = document.getElementById('pokemonModal');
+    const modalContent = document.getElementById('modalContent');
+    const closeModal = document.getElementById('closeModal');
+    const musicToggle = document.getElementById('musicToggle');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    const loading = document.getElementById('loading');
+
+    let allPokemon = [];
+    let caughtPokemon = new Set();
+    let isPlaying = false;
+
+    // Generation ranges
+    const genRanges = {
+      1: { start: 1, end: 151, name: 'Kanto' },
+      2: { start: 152, end: 251, name: 'Johto' },
+      3: { start: 252, end: 386, name: 'Hoenn' },
+      4: { start: 387, end: 493, name: 'Sinnoh' },
+      5: { start: 494, end: 649, name: 'Unova' },
+      6: { start: 650, end: 721, name: 'Kalos' },
+      7: { start: 722, end: 809, name: 'Alola' },
+      8: { start: 810, end: 905, name: 'Galar' },
+      9: { start: 906, end: 1010, name: 'Paldea' }
+    };
+
+    function getPokemonGeneration(id) {
+      for (let gen = 1; gen <= 9; gen++) {
+        const range = genRanges[gen];
+        if (id >= range.start && id <= range.end) {
+          return gen;
+        }
+      }
+      return 1; // Default to Gen 1
+    }
+
+    // Music controls
+    musicToggle.addEventListener('click', () => {
+      if (isPlaying) {
+        backgroundMusic.pause();
+        musicToggle.textContent = '🎵 Play Music';
+        isPlaying = false;
+      } else {
+        // Create a simple tone using Web Audio API since external audio might not work
+        playBackgroundTone();
+        musicToggle.textContent = '🔇 Stop Music';
+        isPlaying = true;
+      }
+    });
+
+    volumeSlider.addEventListener('input', (e) => {
+      if (window.audioContext) {
+        window.gainNode.gain.value = e.target.value;
+      }
+    });
+
+    function playBackgroundTone() {
+      if (!window.audioContext) {
+        window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        window.gainNode = window.audioContext.createGain();
+        window.gainNode.connect(window.audioContext.destination);
+        window.gainNode.gain.value = 0.5;
+      }
+
+      const playTone = (frequency, duration) => {
+        const oscillator = window.audioContext.createOscillator();
+        const gainNode = window.audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(window.gainNode);
+        
+        oscillator.frequency.value = frequency;
+        oscillator.type = 'sine';
+        
+        gainNode.gain.setValueAtTime(0.1, window.audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, window.audioContext.currentTime + duration);
+        
+        oscillator.start(window.audioContext.currentTime);
+        oscillator.stop(window.audioContext.currentTime + duration);
+      };
+
+      // Play a simple Pokemon-like melody
+      const melody = [
+        {freq: 523, duration: 0.5}, // C5
+        {freq: 659, duration: 0.5}, // E5
+        {freq: 784, duration: 0.5}, // G5
+        {freq: 659, duration: 0.5}, // E5
+        {freq: 523, duration: 1.0}, // C5
+      ];
+
+      let time = 0;
+      melody.forEach(note => {
+        setTimeout(() => {
+          if (isPlaying) playTone(note.freq, note.duration);
+        }, time * 1000);
+        time += note.duration + 0.1;
+      });
+
+      // Repeat the melody
+      if (isPlaying) {
+        setTimeout(() => {
+          if (isPlaying) playBackgroundTone();
+        }, (time + 2) * 1000);
+      }
+    }
+
+    async function fetchPokemon(id) {
+      try {
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+        
+        // Some Pokemon might not have sprites, so we'll skip those
+        if (data.sprites && data.sprites.front_default) {
+          allPokemon.push(data);
+          createCard(data);
+        }
+      } catch (error) {
+        console.error(`Error fetching Pokemon ${id}:`, error);
+        // Continue loading other Pokemon even if one fails
+      }
+    }
+
+    function createCard(pokemon) {
+      const card = document.createElement('div');
+      card.classList.add('pokemon');
+      card.dataset.id = pokemon.id;
+      card.dataset.generation = getPokemonGeneration(pokemon.id);
+      
+      const types = pokemon.types.map(t => 
+        `<span class="type-badge type-${t.type.name}">${t.type.name}</span>`
+      ).join('');
+
+      const generation = getPokemonGeneration(pokemon.id);
+      const genName = genRanges[generation].name;
+
+      card.innerHTML = `
+        <div class="gen-badge">Gen ${generation}</div>
+        ${caughtPokemon.has(pokemon.id) ? '<div class="caught-badge">Caught!</div>' : ''}
+        <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}" loading="lazy" />
+        <h3>${pokemon.name}</h3>
+        <p><strong>Height:</strong> ${pokemon.height / 10} m</p>
+        <p><strong>Weight:</strong> ${pokemon.weight / 10} kg</p>
+        <p><strong>Region:</strong> ${genName}</p>
+        <div>${types}</div>
+      `;
+
+      card.addEventListener('click', () => showPokemonDetails(pokemon));
+      container.appendChild(card);
+    }
+
+    function showPokemonDetails(pokemon) {
+      const types = pokemon.types.map(t => 
+        `<span class="type-badge type-${t.type.name}">${t.type.name}</span>`
+      ).join('');
+
+      const stats = pokemon.stats.map(stat => 
+        `<div class="stat">
+          <strong>${stat.stat.name.toUpperCase()}</strong><br>
+          ${stat.base_stat}
+        </div>`
+      ).join('');
+
+      const generation = getPokemonGeneration(pokemon.id);
+      const genName = genRanges[generation].name;
+
+      modalContent.innerHTML = `
+        <img src="${pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default}" alt="${pokemon.name}" />
+        <h2>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h2>
+        <p><strong>ID:</strong> #${pokemon.id.toString().padStart(3, '0')} | <strong>Generation:</strong> ${generation} (${genName})</p>
+        <p><strong>Height:</strong> ${pokemon.height / 10} m | <strong>Weight:</strong> ${pokemon.weight / 10} kg</p>
+        <div style="margin: 15px 0;">${types}</div>
+        <div class="stats">${stats}</div>
+        <button class="music-btn" style="margin-top: 20px;" onclick="catchPokemon(${pokemon.id})">
+          ${caughtPokemon.has(pokemon.id) ? 'Already Caught!' : 'Catch Pokemon!'}
+        </button>
+      `;
+
+      modal.style.display = 'block';
+    }
+
+    function catchPokemon(id) {
+      if (!caughtPokemon.has(id)) {
+        caughtPokemon.add(id);
+        // Play catch sound
+        if (window.audioContext) {
+          const oscillator = window.audioContext.createOscillator();
+          const gainNode = window.audioContext.createGain();
+          oscillator.connect(gainNode);
+          gainNode.connect(window.gainNode);
+          oscillator.frequency.value = 800;
+          oscillator.type = 'square';
+          gainNode.gain.setValueAtTime(0.3, window.audioContext.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, window.audioContext.currentTime + 0.5);
+          oscillator.start();
+          oscillator.stop(window.audioContext.currentTime + 0.5);
+        }
+        
+        // Update the card
+        const card = document.querySelector(`[data-id="${id}"]`);
+        if (card && !card.querySelector('.caught-badge')) {
+          card.insertAdjacentHTML('afterbegin', '<div class="caught-badge">Caught!</div>');
+        }
+        
+        // Update modal
+        const pokemon = allPokemon.find(p => p.id === id);
+        if (pokemon) showPokemonDetails(pokemon);
+      }
+    }
+
+    window.catchPokemon = catchPokemon;
+
+    async function loadPokemons() {
+      loading.style.display = 'block';
+      
+      // Load Pokemon in batches to avoid overwhelming the API
+      const batchSize = 20;
+      const allIds = [];
+      
+      // Collect all Pokemon IDs from Gen 1-9
+      for (let gen = 1; gen <= 9; gen++) {
+        const range = genRanges[gen];
+        for (let i = range.start; i <= range.end; i++) {
+          allIds.push(i);
+        }
+      }
+
+      // Load in batches
+      for (let i = 0; i < allIds.length; i += batchSize) {
+        const batch = allIds.slice(i, i + batchSize);
+        const promises = batch.map(id => fetchPokemon(id));
+        
+        try {
+          await Promise.all(promises);
+          
+          // Update loading text with progress
+          const progress = Math.round(((i + batchSize) / allIds.length) * 100);
+          const loadingText = document.querySelector('.loading p');
+          if (loadingText) {
+            loadingText.textContent = `Loading Pokémon from all generations... ${Math.min(progress, 100)}% (${Math.min(i + batchSize, allIds.length)}/${allIds.length})`;
+          }
+          
+          // Small delay between batches to prevent rate limiting
+          await new Promise(resolve => setTimeout(resolve, 100));
+        } catch (error) {
+          console.error('Error loading batch:', error);
+        }
+      }
+      
+      loading.style.display = 'none';
+    }
+
+    function filterPokemon() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const selectedGeneration = generationFilter.value;
+      const allCards = document.querySelectorAll('.pokemon');
+      
+      allCards.forEach(card => {
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        const types = card.querySelectorAll('.type-badge');
+        const typeText = Array.from(types).map(type => type.textContent.toLowerCase()).join(' ');
+        const cardGeneration = card.dataset.generation;
+        
+        const matchesSearch = name.includes(searchTerm) || typeText.includes(searchTerm);
+        const matchesGeneration = selectedGeneration === 'all' || cardGeneration === selectedGeneration;
+        
+        card.style.display = (matchesSearch && matchesGeneration) ? 'block' : 'none';
+      });
+    }
+
+    searchInput.addEventListener('input', filterPokemon);
+    generationFilter.addEventListener('change', filterPokemon);
+
+    searchInput.addEventListener('input', () => {
+      const searchTerm = searchInput.value.toLowerCase();
+      const allCards = document.querySelectorAll('.pokemon');
+      
+      allCards.forEach(card => {
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        const types = card.querySelectorAll('.type-badge');
+        const typeText = Array.from(types).map(type => type.textContent.toLowerCase()).join(' ');
+        
+        const matches = name.includes(searchTerm) || typeText.includes(searchTerm);
+        card.style.display = matches ? 'block' : 'none';
+      });
+    });
+
+    closeModal.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    // Load Pokemon on page load
+    loadPokemons();
+  </script>
+</body>
+</html>

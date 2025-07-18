@@ -4,582 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <title>Julie Anne De Los Reyes - Portfolio</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary-dark: #0a1428;
+            --primary-blue: #1e3a8a;
+            --accent-blue: #3b82f6;
+            --light-blue: #60a5fa;
+            --text-primary: #ffffff;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --card-bg: rgba(30, 58, 138, 0.1);
+            --card-border: rgba(59, 130, 246, 0.2);
+            --gradient-primary: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            --gradient-secondary: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --shadow-sm: 0 2px 10px rgba(59, 130, 246, 0.1);
+            --shadow-md: 0 8px 25px rgba(59, 130, 246, 0.15);
+            --shadow-lg: 0 20px 40px rgba(59, 130, 246, 0.2);
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            color: #e8f4f8;
-            background: linear-gradient(135deg, #0a1428 0%, #1e3a8a 50%, #1e40af 100%);
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        header {
-            background: rgba(10, 20, 40, 0.95);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #60a5fa;
-            text-decoration: none;
-            background: linear-gradient(45deg, #60a5fa, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: #e8f4f8;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            position: relative;
-            font-weight: 500;
-        }
-
-        .nav-links a:hover {
-            color: #60a5fa;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background: linear-gradient(90deg, #60a5fa, #3b82f6);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: #e8f4f8;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Hero Section with About */
-        .hero {
-            padding: 120px 0 100px;
-            background: linear-gradient(135deg, rgba(10, 20, 40, 0.9), rgba(30, 58, 138, 0.8));
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="grad1" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:%2360a5fa;stop-opacity:0.1"/><stop offset="100%" style="stop-color:%23transparent;stop-opacity:0"/></radialGradient></defs><circle cx="200" cy="200" r="300" fill="url(%23grad1)"/><circle cx="800" cy="600" r="200" fill="url(%23grad1)"/></svg>');
-            pointer-events: none;
-        }
-
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-text {
-            animation: fadeInLeft 1s ease;
-        }
-
-        .hero-text h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, #60a5fa, #3b82f6, #1d4ed8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 700;
-        }
-
-        .hero-text .subtitle {
-            font-size: 1.3rem;
-            color: #93c5fd;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
-
-        .hero-description {
-            font-size: 1.1rem;
-            color: #cbd5e1;
-            margin-bottom: 2rem;
-            line-height: 1.7;
-        }
-
-        .hero-about {
-            background: rgba(30, 58, 138, 0.3);
-            padding: 2rem;
-            border-radius: 20px;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            backdrop-filter: blur(10px);
-            animation: fadeInRight 1s ease;
-        }
-
-        .hero-about h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #60a5fa;
-            font-weight: 600;
-        }
-
-        .about-details p {
-            margin-bottom: 1.5rem;
-            color: #e2e8f0;
-            line-height: 1.6;
-        }
-
-        .skills-preview {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .skill-badge {
-            background: linear-gradient(135deg, #1e40af, #3b82f6);
-            color: white;
-            padding: 0.8rem 1rem;
-            border-radius: 12px;
+        .text-center {
             text-align: center;
-            font-weight: 600;
-            font-size: 0.9rem;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            transition: all 0.3s ease;
         }
 
-        .skill-badge:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
+        .mt-4 {
             margin-top: 2rem;
         }
 
         .cta-button {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-        }
-
-        .cta-button.primary {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            color: white;
-        }
-
-        .cta-button.primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
-        }
-
-        .cta-button.secondary {
-            background: transparent;
-            color: #60a5fa;
-            border: 2px solid #60a5fa;
-        }
-
-        .cta-button.secondary:hover {
-            background: #60a5fa;
-            color: #0a1428;
-        }
-
-        /* Sections */
-        .section {
-            padding: 80px 0;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        }
-
-        .section:nth-child(even) {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-        }
-
-        .section h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #60a5fa;
-            position: relative;
-            font-weight: 600;
-        }
-
-        .section h2::after {
-            content: '';
-            position: absolute;
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, #60a5fa, #3b82f6);
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
-        }
-
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .project-card {
-            background: linear-gradient(135deg, #1e293b, #334155);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            position: relative;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.2);
-        }
-
-        .project-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #1e40af, #3b82f6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.1rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .project-content {
-            padding: 2rem;
-        }
-
-        .project-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #60a5fa;
-        }
-
-        .project-description {
-            color: #cbd5e1;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .project-technologies {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .tech-tag {
-            background: linear-gradient(135deg, #1e40af, #3b82f6);
-            color: white;
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-
-        .project-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .project-link {
-            padding: 0.8rem 1.5rem;
+            padding: 12px 24px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .project-link.github {
-            background: linear-gradient(135deg, #374151, #4b5563);
-            color: white;
-        }
-
-        .project-link.github:hover {
-            background: linear-gradient(135deg, #4b5563, #6b7280);
-            transform: translateY(-2px);
-        }
-
-        /* Contact Section */
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-
-        .contact-info {
-            background: linear-gradient(135deg, #1e40af, #3b82f6);
-            color: white;
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-
-        .contact-info h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-        }
-
-        .contact-item i {
-            width: 30px;
-            margin-right: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .contact-form {
-            background: linear-gradient(135deg, #1e293b, #334155);
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #60a5fa;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid rgba(59, 130, 246, 0.3);
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: rgba(30, 58, 138, 0.1);
-            color: #e8f4f8;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #60a5fa;
-            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .submit-btn {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            color: white;
-            padding: 1rem 2rem;
             border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .submit-btn:hover {
+        .cta-button.primary {
+            background: var(--primary-dark);
+            color: var(--text-primary);
+            border: 2px solid var(--primary-blue);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .cta-button.primary:hover {
+            background: var(--primary-blue);
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent-blue);
         }
 
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, #0a1428, #1e293b);
-            color: #cbd5e1;
-            text-align: center;
-            padding: 3rem 0;
-            border-top: 1px solid rgba(59, 130, 246, 0.2);
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .social-links a {
-            color: #60a5fa;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-            padding: 0.5rem;
-            border-radius: 50%;
-            background: rgba(59, 130, 246, 0.1);
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .social-links a:hover {
-            background: #60a5fa;
-            color: #0a1428;
-            transform: translateY(-3px);
-        }
-
-        /* Animations */
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            animation: fadeInUp 1s ease;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            
-            .hero-text h1 {
-                font-size: 2.5rem;
-            }
-            
-            .contact-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .menu-toggle {
-                display: block;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-            }
+        .cta-button.primary:active {
+            transform: translateY(0);
+            box-shadow: var(--shadow-sm);
         }
     </style>
 </head>
 <body>
     <header>
         <nav class="container">
-            <a href="#" class="logo">My Portfolio</a>
+            <a href="#" class="logo">Julie's Work</a>
             <button class="menu-toggle" id="menuToggle">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#service">Service</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -592,8 +90,8 @@
                     <h1>Julie Anne De Los Reyes</h1>
                     <p class="subtitle">Full Stack Developer</p>
                     <p class="hero-description">
-                        Passionate about creating innovative digital solutions and beautiful user experiences. 
-                        I specialize in modern web development with a focus on clean code and intuitive design.
+                        I am passionate about creating websites that are both useful and beautiful. I enjoy designing pages that are easy to use and look clean. For me, good design means that people can use a website without confusion. 
+                        I always try to make sure my work is simple, clear, and works well on all devices.
                     </p>
                     <div class="cta-buttons">
                         <a href="#projects" class="cta-button primary">
@@ -604,28 +102,44 @@
                             <span>Get In Touch</span>
                             <span>✉</span>
                         </a>
+                        <a href="assets/resume.pdf" class="cta-button download" id="downloadCV">
+                            <span>View CV</span>
+                            <span>📄</span>
+                        </a>
                     </div>
                 </div>
-                <div class="hero-about">
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
                     <h2>About Me</h2>
-                    <div class="about-details">
-                        <p>
-                            Hello! I'm a dedicated developer with a passion for creating innovative solutions 
-                            and beautiful user experiences. I love turning complex problems into simple, 
-                            elegant designs.
-                        </p>
-                        <p>
-                            When I'm not coding, you can find me exploring new technologies, contributing 
-                            to open-source projects, or sharing knowledge with the developer community.
-                        </p>
-                    </div>
+                    <p>
+                        Hi there! I'm a developer who enjoys creating fun and easy-to-use websites.
+                        I like creating websites that are clear and easy to use.
+                    </p>
+                    <p>
+                        When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, 
+                        or sharing knowledge with the developer community.
+                    </p>
                     <div class="skills-preview">
-                        <div class="skill-badge">HTML/CSS</div>
-                        <div class="skill-badge">JavaScript</div>
-                        <div class="skill-badge">React</div>
-                        <div class="skill-badge">Node.js</div>
-                        <div class="skill-badge">Python</div>
-                        <div class="skill-badge">Git</div>
+                        <div class="skill-badge" style="animation-delay: 0.1s;">HTML/CSS</div>
+                        <div class="skill-badge" style="animation-delay: 0.2s;">JavaScript</div>
+                        <div class="skill-badge" style="animation-delay: 0.3s;">Node.js</div>
+                        <div class="skill-badge" style="animation-delay: 0.4s;">PHP</div>
+                        <div class="skill-badge" style="animation-delay: 0.5s;">Git</div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-placeholder">
+                        <div>
+                            <p>📸</p>
+                            <img src="images/julie.jpg" alt="" width="430px" height="420px">
+                            <p style="font-size: 0.9rem; margin-top: 0.5rem;">400x400 recommended</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -636,6 +150,32 @@
         <div class="container">
             <h2>My Projects</h2>
             <div class="projects-grid">
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/laundry.png" alt="Laundry Booking">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Laundry Booking System</h3>
+                        <p class="project-description">
+                        A capstone project that helps users book laundry services online. It includes account login, pickup and delivery, tracking laundry status, and paying using e-wallet. The system is made to be simple and easy to use.
+                        </p>
+                        <div class="project-technologies">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">PHP</span>
+                        <span class="tech-tag">MySql</span>
+                        </div>
+                        <div class="project-links">
+                        <a href="details/LAUNDRY.html" class="project-link learn-more" target="_blank">
+                            <span>🔍</span>
+                            <span>Learn More</span>
+                        </a>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="project-card">
                     <div class="project-image">
                         <img src="images/ecommerce.png" alt="E-Commerce Website">
@@ -644,15 +184,14 @@
                         <h3 class="project-title">E-Commerce Website</h3>
                         <p class="project-description">A full-stack e-commerce platform with user authentication, product catalog, shopping cart, and payment integration. Built with modern technologies for optimal performance.</p>
                         <div class="project-technologies">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">MongoDB</span>
-                            <span class="tech-tag">Stripe</span>
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
                         </div>
                         <div class="project-links">
-                            <a href="#" class="project-link github">
-                                <span>🐙</span>
-                                <span>GitHub</span>
+                            <a href="details/ecommerce.html" class="project-link learn-more" target="_blank">
+                                <span>🔍</span>
+                                <span>Learn More</span>
                             </a>
                         </div>
                     </div>
@@ -666,15 +205,14 @@
                         <h3 class="project-title">Task Management App</h3>
                         <p class="project-description">A productivity app for managing tasks and projects with real-time collaboration features and intuitive drag-and-drop interface. Perfect for team productivity.</p>
                         <div class="project-technologies">
-                            <span class="tech-tag">Vue.js</span>
                             <span class="tech-tag">HTML5</span>
                             <span class="tech-tag">CSS3</span>
                             <span class="tech-tag">JavaScript</span>
                         </div>
                         <div class="project-links">
-                            <a href="#" class="project-link github">
-                                <span>🐙</span>
-                                <span>GitHub</span>
+                            <a href="details/taskmanagement.html" class="project-link learn-more" target="_blank">
+                                <span>🔍</span>
+                                <span>Learn More</span>
                             </a>
                         </div>
                     </div>
@@ -696,10 +234,115 @@
                             <span class="tech-tag">REST API</span>
                         </div>
                         <div class="project-links">
-                            <a href="#" class="project-link github">
-                                <span>🐙</span>
-                                <span>GitHub</span>
+                            <a href="details/pokedex.html" class="project-link learn-more" target="_blank">
+                                <span>🔍</span>
+                                <span>Learn More</span>
                             </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/handmade.png" alt="Handmade Crafts Website">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Handmade Crafts Store</h3>
+                        <p class="project-description">
+                            An eCommerce website showcasing unique handmade items such as keychains, journals, and plant accessories. Fully responsive with categories and product filtering.
+                        </p>
+                        <div class="project-technologies">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Bootstrap</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="details/handmade.html" class="project-link learn-more" target="_blank">
+                                <span>🔍</span>
+                                <span>Learn More</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/plants.png" alt="Plant Shop Website">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Plant Shop Website</h3>
+                        <p class="project-description">
+                            A responsive website for a plant and garden store. Features categories like indoor plants, herbs, and trees with cart functionality and plant care tips.
+                        </p>
+                        <div class="project-technologies">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Bootstrap</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="details/plants.html" class="project-link learn-more" target="_blank">
+                                <span>🔍</span>
+                                <span>Learn More</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View More Button -->
+            <div class="text-center mt-4">
+                <button id="viewMoreBtn" class="cta-button primary">View More Projects ↓</button>
+            </div>
+
+            <!-- Hidden Additional Projects -->
+            <div id="moreProjects" class="projects-grid" style="display: none; margin-top: 2rem;">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/realstate.png" alt="Real Estate Website">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Real Estate Website</h3>
+                        <p class="project-description">
+                            A clean and responsive website designed for real estate agencies to showcase properties, allow users to filter listings, and connect with agents through contact forms.
+                        </p>
+                        <div class="project-technologies">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Bootstrap</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="details/realstate.html" class="project-link learn-more" target="_blank">
+                                <span>🔍</span>
+                                <span>Learn More</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/food.png" alt="Food Ordering App">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Food Ordering App</h3>
+                        <p class="project-description">
+                        A user-friendly web app for restaurants and customers to manage food orders online. It supports real-time order tracking, digital menus, and online payments, built with mobile responsiveness in mind.
+                        </p>
+                        <div class="project-technologies">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">PHP</span>
+                        <span class="tech-tag">MySQL</span>
+                        </div>
+                        <div class="project-links">
+                        <a href="details/foodorder.html" class="project-link learn-more" target="_blank">
+                            <span>🔍</span>
+                            <span>Learn More</span>
+                        </a>
                         </div>
                     </div>
                 </div>
@@ -707,8 +350,129 @@
         </div>
     </section>
 
-    <section id="contact" class="section">
+    <section id="skills" class="section">
         <div class="container">
+            <div class="section-header">
+                <h2>My Skills</h2>
+                <p class="section-subtitle">Technologies I work with</p>
+            </div>
+            <div class="skills-container">
+                <div class="skills-category">
+                    <h3>Frontend</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item" data-skill="90">
+                            <div class="skill-icon">🎨</div>
+                            <div class="skill-info">
+                                <h4>HTML/CSS</h4>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 90%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-skill="85">
+                            <div class="skill-icon">⚡</div>
+                            <div class="skill-info">
+                                <h4>JavaScript</h4>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-skill="80">
+                            <div class="skill-icon">🅱️</div>
+                            <div class="skill-info">
+                                <h4>Bootstrap</h4>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 80%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skills-category">
+                    <h3>Backend</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item" data-skill="85">
+                            <div class="skill-icon">🟢</div>
+                            <div class="skill-info">
+                                <h4>Node.js</h4>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-skill="80">
+                            <div class="skill-icon">🐘</div>
+                            <div class="skill-info">
+                                <h4>PHP</h4>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 80%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-skill="75">
+                            <div class="skill-icon">🗄️</div>
+                            <div class="skill-info">
+                                <h4>MySQL</h4>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skills-category">
+                    <h3>Tools</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item" data-skill="90">
+                            <div class="skill-icon">📱</div>
+                            <div class="skill-info">
+                                <h4>Git</h4>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 90%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-skill="85">
+                            <div class="skill-icon">🎨</div>
+                            <div class="skill-info">
+                                <h4>Figma</h4>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="service" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Services</h2>
+                <p class="section-subtitle">What I can do for you</p>
+            </div>
+            <div class="service-content">
+                <div class="service-card">
+                    <h3>Web Design</h3>
+                    <p>I design responsive and user-friendly websites with clean interfaces to provide a smooth user experience across all devices.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Web Development</h3>
+                    <p>I build functional websites and web applications using HTML, CSS, JavaScript, Node.js, and PHP with database integration.</p>
+                </div>
+                <div class="service-card">
+                    <h3>UI/UX Prototyping</h3>
+                    <p>I create prototypes and wireframes using Figma to visualize user journeys and improve design interaction.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container" id="contact">
             <h2>Get In Touch</h2>
             <div class="contact-content">
                 <div class="contact-info">
@@ -727,52 +491,46 @@
                         <span>Philippines</span>
                     </div>
                 </div>
-                <form class="contact-form" id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
-                </form>
             </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="social-links">
-                <a href="#" title="Email">📧</a>
-                <a href="#" title="LinkedIn">💼</a>
-                <a href="#" title="GitHub">🐙</a>
-                <a href="#" title="Twitter">🐦</a>
-            </div>
-            <p>&copy; 2025 Julie Anne De Los Reyes. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
+        // FIXED: View More Projects Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const viewMoreBtn = document.getElementById('viewMoreBtn');
+            const moreProjects = document.getElementById('moreProjects');
+            let isExpanded = false;
+
+            if (viewMoreBtn && moreProjects) {
+                viewMoreBtn.addEventListener('click', function() {
+                    if (!isExpanded) {
+                        // Show more projects
+                        moreProjects.style.display = 'grid';
+                        viewMoreBtn.innerHTML = 'View Less Projects ↑';
+                        isExpanded = true;
+                    } else {
+                        // Hide more projects
+                        moreProjects.style.display = 'none';
+                        viewMoreBtn.innerHTML = 'View More Projects ↓';
+                        isExpanded = false;
+                    }
+                });
+            }
+        });
+
         // Mobile menu toggle
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.getElementById('navLinks');
 
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        }
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        // Smooth scroll for navigation links
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
@@ -781,7 +539,9 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
-                    navLinks.classList.remove('active');
+                    if (navLinks) {
+                        navLinks.classList.remove('active');
+                    }
                 }
             });
         });
@@ -789,34 +549,13 @@
         // Header background on scroll
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(10, 20, 40, 0.98)';
-            } else {
-                header.style.background = 'rgba(10, 20, 40, 0.95)';
+            if (header) {
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(10, 20, 40, 0.98)';
+                } else {
+                    header.style.background = 'rgba(10, 20, 40, 0.95)';
+                }
             }
-        });
-
-        // Form submission
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(contactForm);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const subject = formData.get('subject');
-            const message = formData.get('message');
-            
-            // Simple validation
-            if (!name || !email || !subject || !message) {
-                alert('Please fill in all fields.');
-                return;
-            }
-            
-            // Simulate form submission
-            alert('Thank you for your message! I\'ll get back to you soon.');
-            contactForm.reset();
         });
 
         // Animate elements on scroll

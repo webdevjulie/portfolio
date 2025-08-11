@@ -6,8 +6,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <title>Julie Anne De Los Reyes - Portfolio</title>
-    <style>
+        <style>
         :root {
             --primary-dark: #0a1428;
             --primary-blue: #1e3a8a;
@@ -74,11 +75,11 @@
             <a href="#" class="logo">Julie's Work</a>
             <button class="menu-toggle" id="menuToggle">☰</button>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#service">Service</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#home" title="Home">Home</a></li>
+                <li><a href="#about" title="About">About</a></li>
+                <li><a href="#projects" title="Projects">Projects</a></li>
+                <li><a href="#service" title="Service">Service</a></li>
+                <li><a href="#contact" title="Contact">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -92,19 +93,19 @@
                     <p class="hero-description">
                         I am passionate about creating websites that are both useful and beautiful. I enjoy designing pages that are easy to use and look clean. For me, good design means that people can use a website without confusion. 
                         I always try to make sure my work is simple, clear, and works well on all devices.
-                    </p>
+                    </p>                    
                     <div class="cta-buttons">
                         <a href="#projects" class="cta-button primary">
                             <span>View My Work</span>
-                            <span>→</span>
+                            <span class="material-symbols-outlined">arrow_forward</span>
                         </a>
                         <a href="#contact" class="cta-button secondary">
                             <span>Get In Touch</span>
-                            <span>✉</span>
+                            <span class="material-symbols-outlined">mail</span>
                         </a>
                         <a href="assets/resume.pdf" class="cta-button download" id="downloadCV">
                             <span>View CV</span>
-                            <span>📄</span>
+                            <span class="material-symbols-outlined">description</span>
                         </a>
                     </div>
                 </div>
@@ -131,15 +132,6 @@
                         <div class="skill-badge" style="animation-delay: 0.3s;">Node.js</div>
                         <div class="skill-badge" style="animation-delay: 0.4s;">PHP</div>
                         <div class="skill-badge" style="animation-delay: 0.5s;">Git</div>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <div class="image-placeholder">
-                        <div>
-                            <p>📸</p>
-                            <img src="images/julie.jpg" alt="" width="430px" height="420px">
-                            <p style="font-size: 0.9rem; margin-top: 0.5rem;">400x400 recommended</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -169,9 +161,61 @@
                         </div>
                         <div class="project-links">
                         <a href="details/LAUNDRY.html" class="project-link learn-more" target="_blank">
-                            <span>🔍</span>
+                            <span class="material-symbols-outlined">search</span>
                             <span>Learn More</span>
                         </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/investment.png" alt="Restaurant Website">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">WebCash Investment</h3>
+                        <p class="project-description">
+                            A modern and responsive platform designed for secure and effective investment management. Features include real-time updates, investment tracking, risk assessment tools, and an easy-to-use interface for beginners and experienced investors alike.
+                        </p>
+                        <div class="project-technologies">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Bootstrap</span>
+                            <span class="tech-tag">PHP</span>
+                            <span class="tech-tag">MySQL</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="details/investment.html" class="project-link learn-more" target="_blank">
+                                <span class="material-symbols-outlined">search</span>
+                                <span>Learn More</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/astranet.png" alt="ISP Website">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">ISP System</h3>
+                        <p class="project-description">
+                            A comprehensive and responsive system for managing Internet Service Provider operations. Features include customer account management, subscription plan monitoring, billing and payment tracking, network performance analytics, and a user-friendly interface for both staff and customers.
+                        </p>
+                        <div class="project-technologies">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Bootstrap</span>
+                            <span class="tech-tag">PHP</span>
+                            <span class="tech-tag">MySQL</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="details/astranet.html" class="project-link learn-more" target="_blank">
+                                <span class="material-symbols-outlined">search</span>
+                                <span>Learn More</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -193,7 +237,7 @@
                         </div>
                         <div class="project-links">
                             <a href="details/foodorder.html" class="project-link learn-more" target="_blank">
-                                <span>🔍</span>
+                                <span class="material-symbols-outlined">search</span>
                                 <span>Learn More</span>
                             </a>
                         </div>
@@ -216,7 +260,7 @@
                         </div>
                         <div class="project-links">
                             <a href="details/cardetailing.html" class="project-link learn-more" target="_blank">
-                                <span>🔍</span>
+                                <span class="material-symbols-outlined">search</span>
                                 <span>View Project</span>
                             </a>
                         </div>
@@ -240,52 +284,7 @@
                         </div>
                         <div class="project-links">
                             <a href="details/pokedex.html" class="project-link learn-more" target="_blank">
-                                <span>🔍</span>
-                                <span>Learn More</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/spa.png" alt="SPA & Salon Website">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">SPA & Salon Website</h3>
-                        <p class="project-description">
-                        A sleek and responsive website for promoting spa and salon services. Includes features like service booking, stylist profiles, pricing details, and customer testimonials. Designed for seamless user experience across all devices.
-                        </p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">HTML5</span>
-                            <span class="tech-tag">CSS3</span>
-                            <span class="tech-tag">JavaScript</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="details/spasalon.html" class="project-link learn-more" target="_blank">
-                                <span>🔍</span>
-                                <span>Learn More</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/ecommerce.png" alt="E-Commerce Website">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">E-Commerce Website</h3>
-                        <p class="project-description">A full-stack e-commerce platform with user authentication, product catalog, shopping cart, and payment integration. Built with modern technologies for optimal performance.</p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">HTML5</span>
-                            <span class="tech-tag">CSS3</span>
-                            <span class="tech-tag">JavaScript</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="details/ecommerce.html" class="project-link learn-more" target="_blank">
-                                <span>🔍</span>
+                                <span class="material-symbols-outlined">search</span>
                                 <span>Learn More</span>
                             </a>
                         </div>
@@ -318,7 +317,30 @@
                         </div>
                         <div class="project-links">
                             <a href="details/realstate.html" class="project-link learn-more" target="_blank">
-                                <span>🔍</span>
+                                <span class="material-symbols-outlined">search</span>
+                                <span>Learn More</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/spa.png" alt="SPA & Salon Website">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">SPA & Salon Website</h3>
+                        <p class="project-description">
+                        A sleek and responsive website for promoting spa and salon services. Includes features like service booking, stylist profiles, pricing details, and customer testimonials. Designed for seamless user experience across all devices.
+                        </p>
+                        <div class="project-technologies">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="details/spasalon.html" class="project-link learn-more" target="_blank">
+                                <span class="material-symbols-outlined">search</span>
                                 <span>Learn More</span>
                             </a>
                         </div>
@@ -342,7 +364,7 @@
                         </div>
                         <div class="project-links">
                             <a href="details/plants.html" class="project-link learn-more" target="_blank">
-                                <span>🔍</span>
+                                <span class="material-symbols-outlined">search</span>
                                 <span>Learn More</span>
                             </a>
                         </div>
@@ -366,7 +388,7 @@
                         </div>
                         <div class="project-links">
                             <a href="details/handmade.html" class="project-link learn-more" target="_blank">
-                                <span>🔍</span>
+                                <span class="material-symbols-outlined">search</span>
                                 <span>Learn More</span>
                             </a>
                         </div>
@@ -387,7 +409,7 @@
                         </div>
                         <div class="project-links">
                             <a href="details/taskmanagement.html" class="project-link learn-more" target="_blank">
-                                <span>🔍</span>
+                                <span class="material-symbols-outlined">search</span>
                                 <span>Learn More</span>
                             </a>
                         </div>
@@ -397,112 +419,120 @@
         </div>
     </section>
 
-    <section id="skills" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2>My Skills</h2>
-                <p class="section-subtitle">Technologies I work with</p>
-            </div>
-            <div class="skills-container">
-                <div class="skills-category">
-                    <h3>Frontend</h3>
-                    <div class="skills-grid">
-                        <div class="skill-item" data-skill="90">
-                            <div class="skill-icon">🎨</div>
-                            <div class="skill-info">
-                                <h4>HTML/CSS</h4>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 90%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="skill-item" data-skill="85">
-                            <div class="skill-icon">⚡</div>
-                            <div class="skill-info">
-                                <h4>JavaScript</h4>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 85%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="skill-item" data-skill="80">
-                            <div class="skill-icon">🅱️</div>
-                            <div class="skill-info">
-                                <h4>Bootstrap</h4>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 80%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="skills-category">
-                    <h3>Backend</h3>
-                    <div class="skills-grid">
-                        <div class="skill-item" data-skill="85">
-                            <div class="skill-icon">🟢</div>
-                            <div class="skill-info">
-                                <h4>Node.js</h4>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 85%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="skill-item" data-skill="80">
-                            <div class="skill-icon">🐘</div>
-                            <div class="skill-info">
-                                <h4>PHP</h4>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 80%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="skill-item" data-skill="75">
-                            <div class="skill-icon">🗄️</div>
-                            <div class="skill-info">
-                                <h4>MySQL</h4>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 75%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="skills-category">
-                    <h3>Tools and API</h3>
-                    <div class="skills-grid">
-                        <div class="skill-item" data-skill="90">
-                            <div class="skill-icon">📱</div>
-                            <div class="skill-info">
-                                <h4>Git</h4>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 90%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="skill-item" data-skill="85">
-                            <div class="skill-icon">🎨</div>
-                            <div class="skill-info">
-                                <h4>Figma</h4>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 85%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="skill-item" data-skill="82">
-                            <div class="skill-icon">🔗</div>
-                            <div class="skill-info">
-                                <h4>REST APIs</h4>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" style="width: 82%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<section id="skills" class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>My Skills</h2>
+            <p class="section-subtitle">Technologies I work with</p>
         </div>
-    </section>
+        <div class="skills-container">
+
+            <!-- Frontend -->
+            <div class="skills-category">
+                <h3>Frontend</h3>
+                <div class="skills-grid">
+                    <div class="skill-item" data-skill="90">
+                        <div class="skill-icon material-symbols-outlined">palette</div>
+                        <div class="skill-info">
+                            <h4>HTML/CSS</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-skill="85">
+                        <div class="skill-icon material-symbols-outlined">bolt</div>
+                        <div class="skill-info">
+                            <h4>JavaScript</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-skill="80">
+                        <div class="skill-icon material-symbols-outlined">grid_view</div>
+                        <div class="skill-info">
+                            <h4>Bootstrap</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backend -->
+            <div class="skills-category">
+                <h3>Backend</h3>
+                <div class="skills-grid">
+                    <div class="skill-item" data-skill="85">
+                        <div class="skill-icon material-symbols-outlined">code</div>
+                        <div class="skill-info">
+                            <h4>Node.js</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-skill="80">
+                        <div class="skill-icon material-symbols-outlined">terminal</div>
+                        <div class="skill-info">
+                            <h4>PHP</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-skill="75">
+                        <div class="skill-icon material-symbols-outlined">database</div>
+                        <div class="skill-info">
+                            <h4>MySQL</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tools and API -->
+            <div class="skills-category">
+                <h3>Tools and API</h3>
+                <div class="skills-grid">
+                    <div class="skill-item" data-skill="90">
+                        <div class="skill-icon material-symbols-outlined">devices</div>
+                        <div class="skill-info">
+                            <h4>Git</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-skill="85">
+                        <div class="skill-icon material-symbols-outlined">brush</div>
+                        <div class="skill-info">
+                            <h4>Figma</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-item" data-skill="82">
+                        <div class="skill-icon material-symbols-outlined">link</div>
+                        <div class="skill-info">
+                            <h4>REST APIs</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 82%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
 
     <section id="service" class="services">
         <div class="container">
@@ -529,10 +559,6 @@
                     <div class="api-experience" style="margin-top: 1rem; padding: 1rem;">
                         <div class="api-list">
                             <div class="api-item">
-                                <strong>Payment Integration</strong>
-                                <small> GCash APIs</small>
-                            </div>
-                            <div class="api-item">
                                 <strong>Custom REST APIs</strong>
                                 <small>PHP/Node.js backend APIs</small>
                             </div>
@@ -555,16 +581,16 @@
                     <h3>Let's Connect!</h3>
                     <p>I'm always open to discussing new opportunities and interesting projects. Feel free to reach out!</p>
                     <div class="contact-item">
-                        <i>📧</i>
-                        <span>delosreyesjulieanne199@gmail.com</span>
+                        <i class="material-symbols-outlined">mail</i>
+                        <span>julieannedelosreyes18@gmail.com</span>
                     </div>
                     <div class="contact-item">
-                        <i>📱</i>
-                        <span>+639512911236</span>
+                        <i class="material-symbols-outlined">call</i>
+                        <span>09512911236</span>
                     </div>
                     <div class="contact-item">
-                        <i>📍</i>
-                        <span>Philippines</span>
+                        <i class="material-symbols-outlined">location_on</i>
+                        <span>Laguna, Philippines</span>
                     </div>
                 </div>
             </div>

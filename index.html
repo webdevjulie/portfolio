@@ -3,109 +3,409 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <title>Julie Anne De Los Reyes - Portfolio</title>
-        <style>
-        :root {
-            --primary-dark: #0a1428;
-            --primary-blue: #1e3a8a;
-            --accent-blue: #3b82f6;
-            --light-blue: #60a5fa;
-            --text-primary: #ffffff;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
-            --card-bg: rgba(30, 58, 138, 0.1);
-            --card-border: rgba(59, 130, 246, 0.2);
-            --gradient-primary: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            --gradient-secondary: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            --shadow-sm: 0 2px 10px rgba(59, 130, 246, 0.1);
-            --shadow-md: 0 8px 25px rgba(59, 130, 246, 0.15);
-            --shadow-lg: 0 20px 40px rgba(59, 130, 246, 0.2);
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'matte-black': '#0a0a0a',
+                        'matte-dark': '#2d2d2d',
+                        'dark-blue': '#0e1b33',
+                        'accent-blue': '#3b82f6',
+                        'light-blue': '#60a5fa'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
         }
-
-        .text-center {
-            text-align: center;
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1a1a1a 0%, #1e293b 100%);
         }
-
-        .mt-4 {
-            margin-top: 2rem;
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
         }
-
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .skill-glow {
             transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            font-family: 'Poppins', sans-serif;
         }
-
-        .cta-button.primary {
-            background: var(--primary-dark);
-            color: var(--text-primary);
-            border: 2px solid var(--primary-blue);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .cta-button.primary:hover {
-            background: var(--primary-blue);
+        .skill-glow:hover {
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
             transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-            border-color: var(--accent-blue);
-        }
-
-        .cta-button.primary:active {
-            transform: translateY(0);
-            box-shadow: var(--shadow-sm);
         }
     </style>
 </head>
-<body>
-    <header>
-        <nav class="container">
-            <a href="#" class="logo">Julie's Work</a>
-            <button class="menu-toggle" id="menuToggle">☰</button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home" title="Home">Home</a></li>
-                <li><a href="#about" title="About">About</a></li>
-                <li><a href="#projects" title="Projects">Projects</a></li>
-                <li><a href="#service" title="Service">Service</a></li>
-                <li><a href="#contact" title="Contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+<body class="bg-matte-black text-white font-sans antialiased">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-matte-black/90 backdrop-blur-lg border-b border-gray-800/50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#home" class="text-2xl font-bold text-gradient hover:scale-105 transition-transform">
+                    Julie's Work
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-light-blue transition-colors duration-300 relative group">
+                        Home
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent-blue transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#about" class="hover:text-light-blue transition-colors duration-300 relative group">
+                        About
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent-blue transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#projects" class="hover:text-light-blue transition-colors duration-300 relative group">
+                        Projects
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent-blue transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#service" class="hover:text-light-blue transition-colors duration-300 relative group">
+                        Services
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent-blue transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#contact" class="hover:text-light-blue transition-colors duration-300 relative group">
+                        Contact
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent-blue transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#faqs" class="hover:text-light-blue transition-colors duration-300 relative group">
+                        FAQs
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent-blue transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </div>
 
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Julie Anne De Los Reyes</h1>
-                    <p class="subtitle">Full Stack Developer</p>
-                    <p class="hero-description">
-                        I am passionate about creating websites that are both useful and beautiful. I enjoy designing pages that are easy to use and look clean. For me, good design means that people can use a website without confusion. 
-                        I always try to make sure my work is simple, clear, and works well on all devices.
-                    </p>                    
-                    <div class="cta-buttons">
-                        <a href="#projects" class="cta-button primary">
-                            <span>View My Work</span>
-                            <span class="material-symbols-outlined">arrow_forward</span>
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden hidden mt-4 pb-4 space-y-2">
+                <a href="#home" class="block py-2 hover:text-light-blue transition-colors">Home</a>
+                <a href="#about" class="block py-2 hover:text-light-blue transition-colors">About</a>
+                <a href="#projects" class="block py-2 hover:text-light-blue transition-colors">Projects</a>
+                <a href="#service" class="block py-2 hover:text-light-blue transition-colors">Services</a>
+                <a href="#contact" class="block py-2 hover:text-light-blue transition-colors">Contact</a>
+                <a href="#faqs" class="block py-2 hover:text-light-blue transition-colors">FAQs</a>
+            </div>
+        </div>
+    </nav>
+
+   <!-- Hero Section -->
+    <section id="home" 
+    class="min-h-screen flex items-center justify-center text-center px-6"
+    style="background: url('./images/black.jpg') center/cover no-repeat, linear-gradient(to bottom, #1a1a2e, #162447);">>
+    <div class="max-w-4xl mx-auto space-y-8 fade-in">
+        <!-- Heading -->
+        <div class="space-y-4">
+        <h1 class="text-5xl md:text-7xl font-bold">
+            Hi, I'm <span class="text-gradient">Julie</span>
+        </h1>
+        <p class="text-2xl md:text-3xl text-white-300 font-light">Full Stack Developer</p>
+        </div>
+
+        <!-- Subtext -->
+        <p class="text-lg md:text-xl text-white-400 leading-relaxed">
+        I am passionate about creating websites that are both useful and beautiful. 
+        I enjoy designing pages that are easy to use and look clean. 
+        For me, good design means that people can use a website without confusion.
+        </p>
+
+        <!-- Buttons -->
+        <div class="flex flex-wrap justify-center gap-4">
+        <a href="#projects"
+            class="group bg-accent-blue hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 glow-effect hover:scale-105">
+            <span>View My Work</span>
+            <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+        </a>
+
+        <a href="www.linkedin.com/in/julie-anne-de-los-reyes-7281b72b4" target="_blank"
+            class="bg-matte-dark hover:bg-gray-700 text-white p-4 rounded-xl transition-all duration-300 hover:scale-105 border border-gray-700">
+            <i class="fab fa-linkedin text-xl"></i>
+        </a>
+
+        <a href="#contact"
+            class="bg-matte-dark hover:bg-gray-700 text-white p-4 rounded-xl transition-all duration-300 hover:scale-105 border border-gray-700">
+            <i class="fas fa-envelope text-xl"></i>
+        </a>
+
+        <a href="./assets/resume.pdf"
+            class="bg-transparent border-2 border-accent-blue text-accent-blue hover:bg-accent-blue hover:text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2">
+            <span>View CV</span>
+            <i class="fas fa-download"></i>
+        </a>
+        </div>
+    </div>
+    </section>
+
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-dark-blue">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">About <span class="text-gradient">Me</span></h2>
+                <div class="w-20 h-1 bg-accent-blue mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8 fade-in">
+                    <div class="space-y-6 text-gray-300 leading-relaxed">
+                        <p class="text-lg">
+                            Hi there! I'm a developer who enjoys creating fun and easy-to-use websites.
+                            I like creating websites that are clear and easy to use.
+                        </p>
+                        <p class="text-lg">
+                            When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, 
+                            or sharing knowledge with the developer community.
+                        </p>
+                    </div>
+
+                    <!-- Skills Preview -->
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-semibold text-light-blue">Skills & Technologies</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="bg-matte-black px-4 py-2 rounded-lg text-sm font-medium border border-gray-700 hover:border-accent-blue transition-colors">HTML/CSS</span>
+                            <span class="bg-matte-black px-4 py-2 rounded-lg text-sm font-medium border border-gray-700 hover:border-accent-blue transition-colors">Tailwind</span>
+                            <span class="bg-matte-black px-4 py-2 rounded-lg text-sm font-medium border border-gray-700 hover:border-accent-blue transition-colors">Bootstrap</span>
+                            <span class="bg-matte-black px-4 py-2 rounded-lg text-sm font-medium border border-gray-700 hover:border-accent-blue transition-colors">JavaScript</span>
+                            <span class="bg-matte-black px-4 py-2 rounded-lg text-sm font-medium border border-gray-700 hover:border-accent-blue transition-colors">React</span>
+                            <span class="bg-matte-black px-4 py-2 rounded-lg text-sm font-medium border border-gray-700 hover:border-accent-blue transition-colors">Node.js</span>
+                            <span class="bg-matte-black px-4 py-2 rounded-lg text-sm font-medium border border-gray-700 hover:border-accent-blue transition-colors">PHP</span>
+                            <span class="bg-matte-black px-4 py-2 rounded-lg text-sm font-medium border border-gray-700 hover:border-accent-blue transition-colors">Git</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Cards -->
+                <div class="grid gap-6 fade-in">
+                    <div class="bg-matte-black p-6 rounded-2xl border border-gray-700 hover:border-accent-blue/50 transition-all duration-300 hover-lift">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="w-12 h-12 bg-accent-blue/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-map-marker-alt text-accent-blue text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold">Location</h3>
+                        </div>
+                        <p class="text-gray-400">Calauan, Laguna Philippines</p>
+                    </div>
+
+                    <div class="bg-matte-black p-6 rounded-2xl border border-gray-700 hover:border-accent-blue/50 transition-all duration-300 hover-lift">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="w-12 h-12 bg-accent-blue/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-code text-accent-blue text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold">Specialization</h3>
+                        </div>
+                        <p class="text-gray-400">Full-Stack Web Development</p>
+                    </div>
+
+                    <div class="bg-matte-black p-6 rounded-2xl border border-gray-700 hover:border-accent-blue/50 transition-all duration-300 hover-lift">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="w-12 h-12 bg-accent-blue/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-clock text-accent-blue text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold">Experience</h3>
+                        </div>
+                        <p class="text-gray-400">2+ Years</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-matte-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">My <span class="text-gradient">Projects</span></h2>
+                <div class="w-20 h-1 bg-accent-blue mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="bg-dark-blue rounded-2xl overflow-hidden hover-lift border border-gray-700 hover:border-accent-blue/50 transition-all duration-300 fade-in">
+                    <div class="h-48 bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center">
+                        <img src="./images/laundry.png" 
+                            alt="Laundry Booking System" 
+                            class="max-h-46 object-contain" />
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <h3 class="text-xl font-bold">Laundry Booking System</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            A capstone project that helps users book laundry services online. Features account login, pickup and delivery tracking, and e-wallet payment integration.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">HTML5</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">CSS3</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">JavaScript</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">PHP</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">MySQL</span>
+                        </div>
+                        <a href="./details/laundry.html" class="w-full bg-accent-blue hover:bg-blue-600 text-white py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center gap-2 inline-block text-center">
+                            <i class="fas fa-external-link-alt"></i>
+                            Learn More
                         </a>
-                        <a href="#contact" class="cta-button secondary">
-                            <span>Get In Touch</span>
-                            <span class="material-symbols-outlined">mail</span>
+                    </div>
+                </div>
+
+
+                <!-- Project 2 -->
+                <div class="bg-dark-blue rounded-2xl overflow-hidden hover-lift border border-gray-700 hover:border-accent-blue/50 transition-all duration-300 fade-in">
+                    <div class="h-48 bg-gradient-to-br from-orange-600 to-orange-800 flex items-center justify-center">
+                        <img src="./images/investment.png" 
+                            alt="Investment System" 
+                            class="max-h-46 object-contain" />
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <h3 class="text-xl font-bold">WebCash Investment</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            A modern platform for secure investment management with real-time updates, tracking, and risk assessment tools for all user levels.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">HTML5</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">Bootstrap</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">PHP</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">MySQL</span>
+                        </div>
+                        <a href="./details/investment.html" class="w-full bg-accent-blue hover:bg-blue-600 text-white py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center gap-2 inline-block text-center">
+                            <i class="fas fa-external-link-alt"></i>
+                            Learn More
                         </a>
-                        <a href="assets/resume.pdf" class="cta-button download" id="downloadCV">
-                            <span>View CV</span>
-                            <span class="material-symbols-outlined">description</span>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="bg-dark-blue rounded-2xl overflow-hidden hover-lift border border-gray-700 hover:border-accent-blue/50 transition-all duration-300 fade-in">
+                    <div class="h-48 bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center">
+                        <img src="./images/astranet.png" 
+                            alt="Investment System" 
+                            class="max-h-46 object-contain" />
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <h3 class="text-xl font-bold">ISP System</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Comprehensive system for Internet Service Provider operations including customer management, billing, and network performance analytics.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">HTML5</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">Bootstrap</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">PHP</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">MySQL</span>
+                        </div>
+                        <a href="./details/astranet.html" class="w-full bg-accent-blue hover:bg-blue-600 text-white py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center gap-2 inline-block text-center">
+                            <i class="fas fa-external-link-alt"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="bg-dark-blue rounded-2xl overflow-hidden hover-lift border border-gray-700 hover:border-accent-blue/50 transition-all duration-300 fade-in">
+                    <div class="h-48 bg-gradient-to-br from-yellow-600 to-yellow-800 flex items-center justify-center">
+                        <img src="./images/resto.png" 
+                            alt="Restaurant Landing Page" 
+                            class="max-h-46 object-contain" />
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <h3 class="text-xl font-bold">Restaurant Website</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Modern and responsive landing page showcasing restaurant brand, menu, and ambiance with online reservations and interactive gallery.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">HTML5</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">CSS3</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">JavaScript</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">Bootstrap</span>
+                        </div>
+                        <a href="./details/foodorder.html" class="w-full bg-accent-blue hover:bg-blue-600 text-white py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center gap-2 inline-block text-center">
+                            <i class="fas fa-external-link-alt"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="bg-dark-blue rounded-2xl overflow-hidden hover-lift border border-gray-700 hover:border-accent-blue/50 transition-all duration-300 fade-in">
+                    <div class="h-48 bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center">
+                        <img src="./images/car.png" 
+                            alt="Car Detailing Landing Page" 
+                            class="max-h-46 object-contain" />
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <h3 class="text-xl font-bold">Car Detailing Website</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Modern Landing Page for premium car detailing services including paint correction and ceramic coating with clean, powerful design.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">HTML5</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">CSS3</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">JavaScript</span>
+                        </div>
+                        <a href="./details/cardetailing.html" class="w-full bg-accent-blue hover:bg-blue-600 text-white py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center gap-2 inline-block text-center">
+                            <i class="fas fa-external-link-alt"></i>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="bg-dark-blue rounded-2xl overflow-hidden hover-lift border border-gray-700 hover:border-accent-blue/50 transition-all duration-300 fade-in">
+                    <div class="h-48 bg-gradient-to-br from-violet-600 to-violet-600 flex items-center justify-center">
+                        <img src="./images/pokedex.png" 
+                            alt="Pokedex" 
+                            class="max-h-46 object-contain" />
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <h3 class="text-xl font-bold">Pokédex Application</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Dynamic web application for browsing and searching Pokémon with detailed stats, types, abilities, and responsive design.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">HTML5</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">CSS3</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">JavaScript</span>
+                            <span class="bg-matte-black px-3 py-1 rounded-full text-xs border border-gray-700">REST API</span>
+                        </div>
+                        <a href="./details/pokedex.html" class="w-full bg-accent-blue hover:bg-blue-600 text-white py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center gap-2 inline-block text-center">
+                            <i class="fas fa-external-link-alt"></i>
+                            Learn More
                         </a>
                     </div>
                 </div>
@@ -113,459 +413,146 @@
         </div>
     </section>
 
-    <section id="about" class="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2>About Me</h2>
-                    <p>
-                        Hi there! I'm a developer who enjoys creating fun and easy-to-use websites.
-                        I like creating websites that are clear and easy to use.
-                    </p>
-                    <p>
-                        When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, 
-                        or sharing knowledge with the developer community.
-                    </p>
-                    <div class="skills-preview">
-                        <div class="skill-badge" style="animation-delay: 0.1s;">HTML/CSS</div>
-                        <div class="skill-badge" style="animation-delay: 0.2s;">JavaScript</div>
-                        <div class="skill-badge" style="animation-delay: 0.3s;">Node.js</div>
-                        <div class="skill-badge" style="animation-delay: 0.4s;">PHP</div>
-                        <div class="skill-badge" style="animation-delay: 0.5s;">Git</div>
-                    </div>
-                </div>
-            </div>
+    <!-- Skills Section -->
+<section id="skills" class="py-20 bg-dark-blue">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16 fade-in">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                My <span class="text-gradient">Skills</span>
+            </h2>
+            <p class="text-gray-400 text-lg">Technologies I work with</p>
+            <div class="w-20 h-1 bg-accent-blue mx-auto rounded-full mt-4"></div>
         </div>
-    </section>
 
-    <section id="projects" class="section">
-        <div class="container">
-            <h2>My Projects</h2>
-            <div class="projects-grid">
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/laundry.png" alt="Laundry Booking">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Laundry Booking System</h3>
-                        <p class="project-description">
-                        A capstone project that helps users book laundry services online. It includes account login, pickup and delivery, tracking laundry status, and paying using e-wallet. The system is made to be simple and easy to use.
-                        </p>
-                        <div class="project-technologies">
-                        <span class="tech-tag">HTML5</span>
-                        <span class="tech-tag">CSS3</span>
-                        <span class="tech-tag">JavaScript</span>
-                        <span class="tech-tag">PHP</span>
-                        <span class="tech-tag">MySql</span>
-                        </div>
-                        <div class="project-links">
-                        <a href="details/LAUNDRY.html" class="project-link learn-more" target="_blank">
-                            <span class="material-symbols-outlined">search</span>
-                            <span>Learn More</span>
-                        </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/investment.png" alt="Restaurant Website">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">WebCash Investment</h3>
-                        <p class="project-description">
-                            A modern and responsive platform designed for secure and effective investment management. Features include real-time updates, investment tracking, risk assessment tools, and an easy-to-use interface for beginners and experienced investors alike.
-                        </p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">HTML5</span>
-                            <span class="tech-tag">CSS3</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">Bootstrap</span>
-                            <span class="tech-tag">PHP</span>
-                            <span class="tech-tag">MySQL</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="details/investment.html" class="project-link learn-more" target="_blank">
-                                <span class="material-symbols-outlined">search</span>
-                                <span>Learn More</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/astranet.png" alt="ISP Website">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">ISP System</h3>
-                        <p class="project-description">
-                            A comprehensive and responsive system for managing Internet Service Provider operations. Features include customer account management, subscription plan monitoring, billing and payment tracking, network performance analytics, and a user-friendly interface for both staff and customers.
-                        </p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">HTML5</span>
-                            <span class="tech-tag">CSS3</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">Bootstrap</span>
-                            <span class="tech-tag">PHP</span>
-                            <span class="tech-tag">MySQL</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="details/astranet.html" class="project-link learn-more" target="_blank">
-                                <span class="material-symbols-outlined">search</span>
-                                <span>Learn More</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/resto.png" alt="Restaurant Website">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Restaurant Website</h3>
-                        <p class="project-description">
-                        A modern and responsive website for showcasing a restaurant’s brand, menu, and ambiance. Features include online reservations, interactive gallery, customer testimonials, and mobile-friendly navigation.
-                        </p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">HTML5</span>
-                            <span class="tech-tag">CSS3</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">Bootstrap</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="details/foodorder.html" class="project-link learn-more" target="_blank">
-                                <span class="material-symbols-outlined">search</span>
-                                <span>Learn More</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/car.png" alt="Car Detailing Service">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Car Detailing Website</h3>
-                        <p class="project-description">
-                            A modern and responsive website for showcasing premium car detailing, paint correction, and ceramic coating services. Designed for automotive businesses seeking a clean and powerful web presence.
-                        </p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">HTML5</span>
-                            <span class="tech-tag">CSS3</span>
-                            <span class="tech-tag">JavaScript</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="details/cardetailing.html" class="project-link learn-more" target="_blank">
-                                <span class="material-symbols-outlined">search</span>
-                                <span>View Project</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/pokedex.png" alt="Pokédex Application">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Pokédex Application</h3>
-                        <p class="project-description">
-                            A dynamic Pokédex web application that lets users browse, search, and view detailed information about Pokémon. Features include stats, types, abilities, and responsive design.
-                        </p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">HTML5</span>
-                            <span class="tech-tag">CSS3</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">REST API</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="details/pokedex.html" class="project-link learn-more" target="_blank">
-                                <span class="material-symbols-outlined">search</span>
-                                <span>Learn More</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
+        <!-- Skill Logos with Names -->
+        <div class="flex flex-wrap justify-center items-center gap-10">
+            <!-- Example: HTML -->
+            <div class="flex flex-col items-center animate-fade-in-up delay-100">
+                <i class="fab fa-html5 text-6xl text-orange-500"></i>
+                <p class="text-gray-400 mt-2 text-sm">HTML5</p>
             </div>
 
-            <!-- View More Button -->
-            <div class="text-center mt-4">
-                <button id="viewMoreBtn" class="cta-button primary">View More Projects ↓</button>
+            <!-- CSS -->
+            <div class="flex flex-col items-center animate-fade-in-up delay-200">
+                <i class="fab fa-css3-alt text-6xl text-blue-500"></i>
+                <p class="text-gray-400 mt-2 text-sm">CSS3</p>
             </div>
 
-            <!-- Hidden Additional Projects -->
-            <div id="moreProjects" class="projects-grid" style="display: none; margin-top: 2rem;">
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/realstate.png" alt="Real Estate Website">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Real Estate Website</h3>
-                        <p class="project-description">
-                            A clean and responsive website designed for real estate agencies to showcase properties, allow users to filter listings, and connect with agents through contact forms.
-                        </p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">HTML5</span>
-                            <span class="tech-tag">CSS3</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">Bootstrap</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="details/realstate.html" class="project-link learn-more" target="_blank">
-                                <span class="material-symbols-outlined">search</span>
-                                <span>Learn More</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/spa.png" alt="SPA & Salon Website">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">SPA & Salon Website</h3>
-                        <p class="project-description">
-                        A sleek and responsive website for promoting spa and salon services. Includes features like service booking, stylist profiles, pricing details, and customer testimonials. Designed for seamless user experience across all devices.
-                        </p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">HTML5</span>
-                            <span class="tech-tag">CSS3</span>
-                            <span class="tech-tag">JavaScript</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="details/spasalon.html" class="project-link learn-more" target="_blank">
-                                <span class="material-symbols-outlined">search</span>
-                                <span>Learn More</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/plants.png" alt="Plant Shop Website">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Plant Shop Website</h3>
-                        <p class="project-description">
-                            A responsive website for a plant and garden store. Features categories like indoor plants, herbs, and trees with cart functionality and plant care tips.
-                        </p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">HTML5</span>
-                            <span class="tech-tag">CSS3</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">Bootstrap</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="details/plants.html" class="project-link learn-more" target="_blank">
-                                <span class="material-symbols-outlined">search</span>
-                                <span>Learn More</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/handmade.png" alt="Handmade Crafts Website">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Handmade Crafts Store</h3>
-                        <p class="project-description">
-                            An eCommerce website showcasing unique handmade items such as keychains, journals, and plant accessories. Fully responsive with categories and product filtering.
-                        </p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">HTML5</span>
-                            <span class="tech-tag">CSS3</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">Bootstrap</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="details/handmade.html" class="project-link learn-more" target="_blank">
-                                <span class="material-symbols-outlined">search</span>
-                                <span>Learn More</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/taskmanagement.jpeg" alt="Task Management App">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Task Management App</h3>
-                        <p class="project-description">A productivity app for managing tasks and projects with real-time collaboration features and intuitive drag-and-drop interface. Perfect for team productivity.</p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">HTML5</span>
-                            <span class="tech-tag">CSS3</span>
-                            <span class="tech-tag">JavaScript</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="details/taskmanagement.html" class="project-link learn-more" target="_blank">
-                                <span class="material-symbols-outlined">search</span>
-                                <span>Learn More</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-<section id="skills" class="section">
-    <div class="container">
-        <div class="section-header">
-            <h2>My Skills</h2>
-            <p class="section-subtitle">Technologies I work with</p>
-        </div>
-        <div class="skills-container">
-
-            <!-- Frontend -->
-            <div class="skills-category">
-                <h3>Frontend</h3>
-                <div class="skills-grid">
-                    <div class="skill-item" data-skill="90">
-                        <div class="skill-icon material-symbols-outlined">palette</div>
-                        <div class="skill-info">
-                            <h4>HTML/CSS</h4>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 90%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="skill-item" data-skill="85">
-                        <div class="skill-icon material-symbols-outlined">bolt</div>
-                        <div class="skill-info">
-                            <h4>JavaScript</h4>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 85%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="skill-item" data-skill="80">
-                        <div class="skill-icon material-symbols-outlined">grid_view</div>
-                        <div class="skill-info">
-                            <h4>Bootstrap</h4>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 80%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- JavaScript -->
+            <div class="flex flex-col items-center animate-fade-in-up delay-300">
+                <i class="fab fa-js-square text-6xl text-yellow-400"></i>
+                <p class="text-gray-400 mt-2 text-sm">JavaScript</p>
             </div>
 
-            <!-- Backend -->
-            <div class="skills-category">
-                <h3>Backend</h3>
-                <div class="skills-grid">
-                    <div class="skill-item" data-skill="85">
-                        <div class="skill-icon material-symbols-outlined">code</div>
-                        <div class="skill-info">
-                            <h4>Node.js</h4>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 85%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="skill-item" data-skill="80">
-                        <div class="skill-icon material-symbols-outlined">terminal</div>
-                        <div class="skill-info">
-                            <h4>PHP</h4>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 80%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="skill-item" data-skill="75">
-                        <div class="skill-icon material-symbols-outlined">database</div>
-                        <div class="skill-info">
-                            <h4>MySQL</h4>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 75%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- React -->
+            <div class="flex flex-col items-center animate-fade-in-up delay-400">
+                <i class="fab fa-react text-6xl text-cyan-400"></i>
+                <p class="text-gray-400 mt-2 text-sm">React</p>
             </div>
 
-            <!-- Tools and API -->
-            <div class="skills-category">
-                <h3>Tools and API</h3>
-                <div class="skills-grid">
-                    <div class="skill-item" data-skill="90">
-                        <div class="skill-icon material-symbols-outlined">devices</div>
-                        <div class="skill-info">
-                            <h4>Git</h4>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 90%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="skill-item" data-skill="85">
-                        <div class="skill-icon material-symbols-outlined">brush</div>
-                        <div class="skill-info">
-                            <h4>Figma</h4>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 85%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="skill-item" data-skill="82">
-                        <div class="skill-icon material-symbols-outlined">link</div>
-                        <div class="skill-info">
-                            <h4>REST APIs</h4>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 82%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- Bootstrap -->
+            <div class="flex flex-col items-center animate-fade-in-up delay-500">
+                <i class="fab fa-bootstrap text-6xl text-purple-600"></i>
+                <p class="text-gray-400 mt-2 text-sm">Bootstrap</p>
             </div>
 
+            <!-- TailwindCSS -->
+            <div class="flex flex-col items-center animate-fade-in-up delay-600">
+                <svg class="w-16 h-16 text-sky-400" viewBox="0 0 48 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24 12c-6.627 0-10.667 3.333-12 10 2.4-3.333 5.2-4.667 8.4-4 1.826.365 3.128 1.561 4.528 3.019C26.295 22.514 28.192 24.5 32 24.5c6.667 0 10.667-3.333 12-10-2.4 3.333-5.2 4.667-8.4 4-1.826-.365-3.128-1.561-4.528-3.019C29.705 13.986 27.808 12 24 12zm-12 12c-6.627 0-10.667 3.333-12 10 2.4-3.333 5.2-4.667 8.4-4 1.826.365 3.128 1.561 4.528 3.019C14.295 34.514 16.192 36.5 20 36.5c6.667 0 10.667-3.333 12-10-2.4 3.333-5.2 4.667-8.4 4-1.826-.365-3.128-1.561-4.528-3.019C21.705 25.986 19.808 24 16 24z"/>
+                </svg>
+                <p class="text-gray-400 mt-2 text-sm">TailwindCSS</p>
+            </div>
+
+            <!-- Node.js -->
+            <div class="flex flex-col items-center animate-fade-in-up delay-700">
+                <i class="fab fa-node-js text-6xl text-green-500"></i>
+                <p class="text-gray-400 mt-2 text-sm">Node.js</p>
+            </div>
+
+            <!-- PHP -->
+            <div class="flex flex-col items-center animate-fade-in-up delay-800">
+                <i class="fab fa-php text-6xl text-indigo-500"></i>
+                <p class="text-gray-400 mt-2 text-sm">PHP</p>
+            </div>
+
+            <!-- MySQL -->
+            <div class="flex flex-col items-center animate-fade-in-up delay-900">
+                <i class="fas fa-database text-6xl text-blue-600"></i>
+                <p class="text-gray-400 mt-2 text-sm">MySQL</p>
+            </div>
+
+            <!-- Git -->
+            <div class="flex flex-col items-center animate-fade-in-up delay-1000">
+                <i class="fab fa-git-alt text-6xl text-red-500"></i>
+                <p class="text-gray-400 mt-2 text-sm">Git</p>
+            </div>
+
+            <!-- Figma -->
+            <div class="flex flex-col items-center animate-fade-in-up delay-1100">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg" 
+                     alt="Figma Logo" 
+                     class="w-16 h-16 object-contain" />
+                <p class="text-gray-400 mt-2 text-sm">Figma</p>
+            </div>
         </div>
     </div>
 </section>
 
 
-    <section id="service" class="services">
-        <div class="container">
-            <div class="section-header">
-                <h2>Services</h2>
-                <p class="section-subtitle">What I can do for you</p>
+
+    <!-- Services Section -->
+    <section id="service" class="py-20 bg-matte-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">My <span class="text-gradient">Services</span></h2>
+                <p class="text-gray-400 text-lg">What I can do for you</p>
+                <div class="w-20 h-1 bg-accent-blue mx-auto rounded-full mt-4"></div>
             </div>
-            <div class="service-content">
-                <div class="service-card">
-                    <h3>Web Design</h3>
-                    <p>I design responsive and user-friendly websites with clean interfaces to provide a smooth user experience across all devices.</p>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-dark-blue p-8 rounded-2xl hover-lift border border-gray-700 hover:border-accent-blue/50 transition-all duration-300 fade-in">
+                    <div class="w-16 h-16 bg-accent-blue/20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-paint-brush text-2xl text-accent-blue"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Web Design</h3>
+                    <p class="text-gray-400 leading-relaxed">I design responsive and user-friendly websites with clean interfaces to provide a smooth user experience across all devices.</p>
                 </div>
-                <div class="service-card">
-                    <h3>Web Development</h3>
-                    <p>I build functional websites and web applications using HTML, CSS, JavaScript, Node.js, and PHP with database integration.</p>
+
+                <div class="bg-dark-blue p-8 rounded-2xl hover-lift border border-gray-700 hover:border-accent-blue/50 transition-all duration-300 fade-in">
+                    <div class="w-16 h-16 bg-accent-blue/20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-code text-2xl text-accent-blue"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Web Development</h3>
+                    <p class="text-gray-400 leading-relaxed">I build functional websites and web applications using HTML, CSS, JavaScript, Node.js, and PHP with database integration.</p>
                 </div>
-                <div class="service-card">
-                    <h3>UI/UX Prototyping</h3>
-                    <p>I create prototypes and wireframes using Figma to visualize user journeys and improve design interaction.</p>
+
+                <div class="bg-dark-blue p-8 rounded-2xl hover-lift border border-gray-700 hover:border-accent-blue/50 transition-all duration-300 fade-in">
+                    <div class="w-16 h-16 bg-accent-blue/20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-mobile-alt text-2xl text-accent-blue"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">UI/UX Prototyping</h3>
+                    <p class="text-gray-400 leading-relaxed">I create prototypes and wireframes using Figma to visualize user journeys and improve design interaction.</p>
                 </div>
-                <div class="service-card">
-                    <h3>🔗 API Integration & Development</h3>
-                    <p>I specialize in integrating third-party APIs (payment gateways, maps) and building custom REST APIs to connect frontend applications with databases and external services.</p>
-                    <div class="api-experience" style="margin-top: 1rem; padding: 1rem;">
-                        <div class="api-list">
-                            <div class="api-item">
-                                <strong>Custom REST APIs</strong>
-                                <small>PHP/Node.js backend APIs</small>
-                            </div>
-                            <div class="api-item">
-                                <strong>Data APIs</strong>
-                                <small>Weather, Maps</small>
-                            </div>
+
+                <div class="bg-dark-blue p-8 rounded-2xl hover-lift border border-gray-700 hover:border-accent-blue/50 transition-all duration-300 fade-in">
+                    <div class="w-16 h-16 bg-accent-blue/20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-link text-2xl text-accent-blue"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">API Integration</h3>
+                    <p class="text-gray-400 leading-relaxed">I specialize in integrating third-party APIs and building custom REST APIs to connect applications with databases and external services.</p>
+                    <div class="mt-4 space-y-2">
+                        <div class="flex items-center gap-2 text-sm text-gray-500">
+                            <i class="fas fa-check text-accent-blue"></i>
+                            <span>Custom REST APIs</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-500">
+                            <i class="fas fa-check text-accent-blue"></i>
+                            <span>Payment Gateways</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-500">
+                            <i class="fas fa-check text-accent-blue"></i>
+                            <span>Data APIs</span>
                         </div>
                     </div>
                 </div>
@@ -573,90 +560,202 @@
         </div>
     </section>
 
-    <footer>
-        <div class="container" id="contact">
-            <h2>Get In Touch</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>Let's Connect!</h3>
-                    <p>I'm always open to discussing new opportunities and interesting projects. Feel free to reach out!</p>
-                    <div class="contact-item">
-                        <i class="material-symbols-outlined">mail</i>
-                        <span>julieannedelosreyes18@gmail.com</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="material-symbols-outlined">location_on</i>
-                        <span>Laguna, Philippines</span>
+    <!-- FAQs Section -->
+    <section id="faqs" class="py-20 bg-dark-blue">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    Frequently Asked <span class="text-gradient">Questions</span>
+                </h2>
+                <div class="w-20 h-1 bg-accent-blue mx-auto rounded-full"></div>
+            </div>
+
+            <div class="space-y-6 fade-in">
+                <!-- FAQ 1 -->
+                <div class="bg-matte-black rounded-2xl border border-gray-700 overflow-hidden">
+                    <button class="faq-button w-full p-6 text-left flex justify-between items-center hover:bg-matte-dark transition-colors" data-faq="1">
+                        <span class="font-semibold text-lg">What services do you offer?</span>
+                        <i class="fas fa-chevron-down faq-icon transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-400 leading-relaxed">
+                            I offer web design, web development, UI/UX prototyping, and API integration services. 
+                            I create responsive, user-friendly, and modern websites tailored to your needs.
+                        </p>
                     </div>
                 </div>
+
+                <!-- FAQ 2 -->
+                <div class="bg-matte-black rounded-2xl border border-gray-700 overflow-hidden">
+                    <button class="faq-button w-full p-6 text-left flex justify-between items-center hover:bg-matte-dark transition-colors" data-faq="2">
+                        <span class="font-semibold text-lg">Do you work on freelance projects?</span>
+                        <i class="fas fa-chevron-down faq-icon transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-400 leading-relaxed">
+                            Yes! I am open to freelance work and collaboration on both small and large-scale projects. 
+                            You can contact me through the form or my email provided below.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="bg-matte-black rounded-2xl border border-gray-700 overflow-hidden">
+                    <button class="faq-button w-full p-6 text-left flex justify-between items-center hover:bg-matte-dark transition-colors" data-faq="3">
+                        <span class="font-semibold text-lg">What technologies do you specialize in?</span>
+                        <i class="fas fa-chevron-down faq-icon transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-400 leading-relaxed">
+                            I specialize in HTML, CSS, JavaScript, React, Node.js, PHP, and MySQL. 
+                            I also use tools like Git, Figma, and Bootstrap for efficient development and design.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="bg-matte-black rounded-2xl border border-gray-700 overflow-hidden">
+                    <button class="faq-button w-full p-6 text-left flex justify-between items-center hover:bg-matte-dark transition-colors" data-faq="4">
+                        <span class="font-semibold text-lg">How can I get in touch with you?</span>
+                        <i class="fas fa-chevron-down faq-icon transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-400 leading-relaxed">
+                            You can reach me through the contact section, via email at 
+                            <strong class="text-accent-blue">julieannedelosreyes18@gmail.com</strong>, 
+                            or connect with me on LinkedIn/GitHub.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ 5-->
+                <div class="bg-matte-black rounded-2xl border border-gray-700 overflow-hidden">
+                    <button class="faq-button w-full p-6 text-left flex justify-between items-center hover:bg-matte-dark transition-colors" data-faq="5">
+                        <span class="font-semibold text-lg">What I built, what problem I solved, and what impact it had?</span>
+                        <i class="fas fa-chevron-down faq-icon transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-400 leading-relaxed">
+                            I built an <strong>Investment and Laundry Booking System</strong>.  
+                            The problem was that laundry shops had a hard time managing bookings and investors did not have clear records.  
+                            My system made it easy to book laundry services online, keep track of payments, and record investments.  
+                            The impact was faster service for customers, easier work for the laundry shop, and better trust from investors.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 bg-matte-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Get In <span class="text-gradient">Touch</span></h2>
+                <p class="text-gray-400 text-lg">Let's connect and discuss your next project</p>
+                <div class="w-20 h-1 bg-accent-blue mx-auto rounded-full mt-4"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8 fade-in">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-light-blue">Let's Connect!</h3>
+                        <p class="text-gray-400 text-lg leading-relaxed">
+                            I'm always open to discussing new opportunities and interesting projects. Feel free to reach out!
+                        </p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4 p-4 bg-dark-blue rounded-lg border border-gray-700 hover:border-accent-blue/50 transition-all duration-300">
+                            <div class="w-12 h-12 bg-accent-blue/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-envelope text-accent-blue text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Email</p>
+                                <p class="font-semibold">delosreyesjulieanne199@gmail.com</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 p-4 bg-dark-blue rounded-lg border border-gray-700 hover:border-accent-blue/50 transition-all duration-300">
+                            <div class="w-12 h-12 bg-accent-blue/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-phone text-accent-blue text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Phone</p>
+                                <p class="font-semibold">09384251369</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 p-4 bg-dark-blue rounded-lg border border-gray-700 hover:border-accent-blue/50 transition-all duration-300">
+                            <div class="w-12 h-12 bg-accent-blue/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-map-marker-alt text-accent-blue text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Location</p>
+                                <p class="font-semibold">Laguna, Philippines</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <a href="https://www.linkedin.com/in/julie-anne-de-los-reyes-7281b72b4" target="_blank" class="w-12 h-12 bg-accent-blue/20 rounded-lg flex items-center justify-center hover:bg-accent-blue hover:text-white transition-all duration-300">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="mailto:delosreyesjulieanne199@gmail.com" class="w-12 h-12 bg-accent-blue/20 rounded-lg flex items-center justify-center hover:bg-accent-blue hover:text-white transition-all duration-300">
+                            <i class="fas fa-envelope text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-dark-blue p-8 rounded-2xl border border-gray-700 fade-in">
+                    <form class="space-y-6" id="contact-form">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Name *</label>
+                                <input type="text" name="from_name" required class="w-full bg-matte-black border border-gray-600 rounded-lg px-4 py-3 focus:border-accent-blue focus:outline-none transition-colors" placeholder="Your name">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Email *</label>
+                                <input type="email" name="from_email" required class="w-full bg-matte-black border border-gray-600 rounded-lg px-4 py-3 focus:border-accent-blue focus:outline-none transition-colors" placeholder="your@email.com">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Subject</label>
+                            <input type="text" name="subject" class="w-full bg-matte-black border border-gray-600 rounded-lg px-4 py-3 focus:border-accent-blue focus:outline-none transition-colors" placeholder="Project inquiry">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Message *</label>
+                            <textarea rows="5" name="message" required class="w-full bg-matte-black border border-gray-600 rounded-lg px-4 py-3 focus:border-accent-blue focus:outline-none transition-colors resize-none" placeholder="Tell me about your project..."></textarea>
+                        </div>
+                        
+                        <button type="submit" id="submit-btn" class="w-full bg-accent-blue hover:bg-blue-600 text-white font-semibold py-4 rounded-lg transition-colors duration-300 flex items-center justify-center gap-2">
+                            <span id="submit-text">Send Message</span>
+                            <i id="submit-icon" class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-blue border-t border-gray-700 py-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center">
+                <p class="text-gray-400">
+                    © 2024 Julie Anne De Los Reyes. Built with passion and <span class="text-accent-blue">Tailwind CSS</span>.
+                </p>
             </div>
         </div>
     </footer>
 
     <script>
-        // FIXED: View More Projects Toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            const viewMoreBtn = document.getElementById('viewMoreBtn');
-            const moreProjects = document.getElementById('moreProjects');
-            let isExpanded = false;
-
-            if (viewMoreBtn && moreProjects) {
-                viewMoreBtn.addEventListener('click', function() {
-                    if (!isExpanded) {
-                        // Show more projects
-                        moreProjects.style.display = 'grid';
-                        viewMoreBtn.innerHTML = 'View Less Projects ↑';
-                        isExpanded = true;
-                    } else {
-                        // Hide more projects
-                        moreProjects.style.display = 'none';
-                        viewMoreBtn.innerHTML = 'View More Projects ↓';
-                        isExpanded = false;
-                    }
-                });
-            }
-        });
-
-        // Mobile menu toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const navLinks = document.getElementById('navLinks');
-
-        if (menuToggle && navLinks) {
-            menuToggle.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
-        }
-
-        // Smooth scroll for navigation links
-        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    if (navLinks) {
-                        navLinks.classList.remove('active');
-                    }
-                }
-            });
-        });
-
-        // Header background on scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (header) {
-                if (window.scrollY > 100) {
-                    header.style.background = 'rgba(10, 20, 40, 0.98)';
-                } else {
-                    header.style.background = 'rgba(10, 20, 40, 0.95)';
-                }
-            }
-        });
-
-        // Animate elements on scroll
+        // Initialize EmailJS
+        emailjs.init("NLqPT0rKpfBxQSUBq"); 
+        
+        // Fade-in animation
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -665,56 +764,105 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
+                    entry.target.style.animationDelay = `${Math.random() * 0.3}s`;
+                    entry.target.classList.add('animate-in');
                 }
             });
         }, observerOptions);
 
-        // Observe all sections
-        document.querySelectorAll('.section').forEach(section => {
-            observer.observe(section);
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
         });
 
-        // Project card hover effects
-        document.querySelectorAll('.project-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-10px) scale(1.02)';
-            });
+        // Notification system
+        function showNotification(message, type = 'success') {
+            // Remove existing notifications
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}-message`;
+            notification.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'} text-xl"></i>
+                    <span>${message}</span>
+                </div>
+            `;
             
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0) scale(1)';
-            });
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            // Hide notification after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+
+        // Contact form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const form = this;
+            const submitBtn = document.getElementById('submit-btn');
+            const submitText = document.getElementById('submit-text');
+            const submitIcon = document.getElementById('submit-icon');
+            
+            // Show loading state
+            submitBtn.classList.add('loading');
+            submitText.textContent = 'Sending...';
+            submitIcon.className = 'fas fa-spinner fa-spin';
+            
+            // Get form data
+            const formData = new FormData(form);
+            const templateParams = {
+                from_name: formData.get('from_name'),
+                from_email: formData.get('from_email'),
+                subject: formData.get('subject') || 'New Contact Form Submission',
+                message: formData.get('message'),
+                to_email: 'delosreyesjulieanne199@gmail.com'
+            };
+            
+            // Send email using EmailJS
+            emailjs.send('service_jegjo2b', 'template_12fweuk', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
+                    form.reset();
+                })
+                .catch(function(error) {
+                    console.log('FAILED...', error);
+                    showNotification('Failed to send message. Please try again or contact me directly.', 'error');
+                })
+                .finally(function() {
+                    // Reset button state
+                    submitBtn.classList.remove('loading');
+                    submitText.textContent = 'Send Message';
+                    submitIcon.className = 'fas fa-paper-plane';
+                });
         });
 
-        // Skill badges animation
-        document.querySelectorAll('.skill-badge').forEach((badge, index) => {
-            badge.style.animationDelay = `${index * 0.1}s`;
-            badge.classList.add('fade-in');
-        });
-
-        // Floating particles effect
-        function createParticle() {
+        // Floating particles animation
+        function createFloatingParticle() {
             const particle = document.createElement('div');
-            particle.style.position = 'fixed';
-            particle.style.width = '3px';
-            particle.style.height = '3px';
-            particle.style.background = 'rgba(96, 165, 250, 0.4)';
-            particle.style.borderRadius = '50%';
-            particle.style.pointerEvents = 'none';
-            particle.style.zIndex = '1';
+            particle.className = 'fixed w-1 h-1 bg-accent-blue/30 rounded-full pointer-events-none z-0';
             particle.style.left = Math.random() * window.innerWidth + 'px';
             particle.style.top = window.innerHeight + 'px';
             
             document.body.appendChild(particle);
             
-            const animationDuration = Math.random() * 4000 + 3000;
-            const horizontalMovement = (Math.random() - 0.5) * 100;
+            const duration = Math.random() * 4000 + 3000;
+            const drift = (Math.random() - 0.5) * 100;
             
             particle.animate([
                 { transform: 'translateY(0px) translateX(0px)', opacity: 0 },
-                { transform: `translateY(-${window.innerHeight + 100}px) translateX(${horizontalMovement}px)`, opacity: 1 }
+                { transform: `translateY(-${window.innerHeight + 100}px) translateX(${drift}px)`, opacity: 1 }
             ], {
-                duration: animationDuration,
+                duration: duration,
                 easing: 'linear'
             }).addEventListener('finish', () => {
                 particle.remove();
@@ -722,7 +870,7 @@
         }
 
         // Create particles periodically
-        setInterval(createParticle, 500);
+        setInterval(createFloatingParticle, 800);
     </script>
 </body>
 </html>
